@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    name: BankingProgram MySql Connection
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/banking
+    username: root
+    password: root
+  jpa:
+      database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+      database: MYSQL
+      show-sql: false
+      properties:
+        hibernate.cache.use_second_level_cache: false
+        hibernate.cache.use_query_cache: false
+        hibernate.generate_statistics: false
+        hibernate.enable_lazy_load_no_trans: true
+      open-in-view: false
+server:
+  port: 8080
+
+debug: false
