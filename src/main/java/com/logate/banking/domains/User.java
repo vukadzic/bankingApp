@@ -29,6 +29,9 @@ public class User {
     private String jmbg;
 
     @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -71,6 +74,14 @@ public class User {
 
     public void setJmbg(String jmbg) {
         this.jmbg = jmbg;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() { return password; }
