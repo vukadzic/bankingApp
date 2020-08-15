@@ -1,0 +1,26 @@
+00:10:57.519 [main] DEBUG liquibase.resource.ClassLoaderResourceAccessor - Opening jar:file:/C:/Program%20Files/liquibase/liquibase.jar!/liquibase.build.properties as liquibase.build.properties
+00:10:57.544 [main] INFO liquibase.integration.commandline.Main - ####################################################
+##   _     _             _ _                      ##
+##  | |   (_)           (_) |                     ##
+##  | |    _  __ _ _   _ _| |__   __ _ ___  ___   ##
+##  | |   | |/ _` | | | | | '_ \ / _` / __|/ _ \  ##
+##  | |___| | (_| | |_| | | |_) | (_| \__ \  __/  ##
+##  \_____/_|\__, |\__,_|_|_.__/ \__,_|___/\___|  ##
+##              | |                               ##
+##              |_|                               ##
+##                                                ## 
+##  Get documentation at docs.liquibase.com       ##
+##  Get certified courses at learn.liquibase.com  ## 
+##  Get advanced features and support at          ##
+##      liquibase.com/protrial                    ##
+##                                                ##
+####################################################
+Starting Liquibase at Sun, 16 Aug 2020 00:10:57 CEST (version 3.10.2 #22 built at Mon Jul 27 04:21:02 UTC 2020)
+00:10:57.544 [main] WARN liquibase.integration.commandline.Main - To display the help, please pass the '--help' option on the command line.
+00:10:57.545 [main] ERROR liquibase.integration.commandline.Main - Unexpected error running Liquibase: Unexpected value 'rollbackking' (options must start with a '--')
+00:10:57.545 [main] ERROR liquibase.integration.commandline.Main - For more information, please use the --logLevel flag
+00:10:57.549 [main] ERROR liquibase.integration.commandline.Main - Unexpected error running Liquibase: Unexpected value 'rollbackking' (options must start with a '--')
+liquibase.exception.CommandLineParsingException: Unexpected value 'rollbackking' (options must start with a '--')
+	at liquibase.integration.commandline.Main.parseOptions(Main.java:1112)
+	at liquibase.integration.commandline.Main.run(Main.java:246)
+	at liquibase.integration.commandline.Main.main(Main.java:159)
