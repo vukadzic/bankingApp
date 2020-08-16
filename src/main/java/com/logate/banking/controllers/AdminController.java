@@ -59,12 +59,16 @@ public class AdminController {
     }
 
     @PostMapping(value="/create-user")
-    public ResponseEntity<User> createUser (@Valid @RequestBody User user){
+    public ResponseEntity<User> createUser (@Valid @RequestBody User user,
+                                            @RequestParam(name = "roleName") String roleName){
         if(user.getId()!=null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        User savedUser = userService.create(user);
-        return new ResponseEntity<>(savedUser,HttpStatus.CREATED);
+        User savedUser = userService.create(user,roleName);
+        if(savedUser!=null) {
+            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/create-account")

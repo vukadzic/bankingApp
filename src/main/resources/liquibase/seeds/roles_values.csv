@@ -1,0 +1,3 @@
+"name";"description"
+"ROLE_USER";"Has access to user services"
+"ROLE_ADMIN";"Has access to all services"

@@ -6,6 +6,9 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="./migrations/20200815235800_added_column_password_to_user.xml" relativeToChangelogFile="true"/>
+    <include file="./migrations/20200816111600_added_table_role.xml" relativeToChangelogFile="true"/>
+    <include file="./migrations/20200816112100_added_fk_on_user_references_role.xml" relativeToChangelogFile="true"/>
+    <include file="./migrations/20200816113800_added_data_to_role.xml" relativeToChangelogFile="true"/>
 
 
 

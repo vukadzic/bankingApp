@@ -49,6 +49,11 @@ public class User {
     @Column(name = "create_time")
     private Date createdAt = new Date();
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    @JsonIgnoreProperties("userList")
+    private Role role;
+
     @OneToMany(mappedBy = "user", targetEntity = BankAccount.class)
     List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
 
@@ -126,6 +131,14 @@ public class User {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public List<BankAccount> getBankAccounts() {
