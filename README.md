@@ -162,7 +162,7 @@ Service for deactivating a bank (setting is_acive field to false)
 
 Service for creating new user in database
 
-**URL** : `/admin/create-user`
+**URL** : `/admin/create-user?roleName=?`
 
 **Method** : `POST`
 
@@ -170,12 +170,17 @@ Service for creating new user in database
 
 **Permissions required** : None
 
+**Data constraints (query params)**
+
+roleName=[1 to 45 char]
+
 **Data constraints**
 
 ```json
 {
     "fullName":"[1 to 60 chars]",
     "jmbg":"[13 char, can only contain numbers(0-9)]",
+    "username":"[1 to 45 char]",
     "password":"[1 to 45 char]",
     "address":"[1 to 100 char]",
     "birthDate":"YYYY-MM-DD",
@@ -194,6 +199,7 @@ Service for creating new user in database
 {
     "fullName":"Vuk Adzic",
     "jmbg":"1907997666666",
+    "username":"vukadzic",
     "password":"123456",
     "address":"Zagoric Ulica 13, br 5",
     "birthDate":"1997-07-19",
@@ -211,12 +217,18 @@ Service returns created object.
     "id": 6,
     "fullName": "Vuk Adzic",
     "jmbg": "1907997666666",
+    "username":"vukadzic",
     "password": "123456",
     "address": "Zagoric Ulica 13, br 5",
     "birthDate": "1997-07-19T00:00:00.000+00:00",
     "email": "adzic820@gmail.com",
     "phoneNumber": "067006780",
     "createdAt": "2020-08-14T11:52:10.272+00:00",
+    "role": {
+        "id": 2,
+        "name": "ROLE_ADMIN",
+        "description": "Has access to all services"
+    },
     "bankAccounts": []
 }
 ```
@@ -229,7 +241,7 @@ Service returns created object.
 ## Notes
 
 * Field createdAt is filled automatically by db with current timestamp, and user entity also contains list od bank accounts of user. Data of user which we want to create is
-sent in json format in http body.
+sent in json format in http body. In queryparam nameRole name of role which should be added to user needs to be sent. In this app, we have 2 roles: "ROLE_USER" and "ROLE_ADMIN".
 
 # Creating bank account
 
