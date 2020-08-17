@@ -65,7 +65,7 @@ CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `full_name` varchar(60) NOT NULL,
   `JMBG` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `address` varchar(100) DEFAULT NULL,
   `birth_date` date DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
