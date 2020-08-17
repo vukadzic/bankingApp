@@ -2,28 +2,17 @@ package com.logate.banking.dto;
 
 public class BankTransferDTO {
 
-    private Integer userId;
-    private String userPassword = "";
-    private Double amount;
+    private Double amouth;
     private String fromAccountNumber;
     private String toAccountNumber;
 
-    public Integer getUserId() { return userId; }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public Double getAmouth() {
+        return amouth;
     }
 
-    public String getUserPassword() { return userPassword; }
-
-    public void setUserPassword(String userPassword) { this.userPassword = userPassword; }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setAmouth(Double amouth) {
+        this.amouth = amouth;
     }
 
     public String getFromAccountNumber() {

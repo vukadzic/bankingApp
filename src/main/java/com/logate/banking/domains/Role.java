@@ -1,8 +1,13 @@
 package com.logate.banking.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jdk.jfr.MemoryAddress;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "role")
@@ -18,8 +23,10 @@ public class Role {
     @Column(name="description")
     private String description;
 
-    @OneToMany(mappedBy = "role", targetEntity = User.class)
-    List<User> userList = new ArrayList<User>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "roles", targetEntity = User.class)
+    private Set<User> users = new HashSet<>();
+
 
     public Integer getId() {
         return id;
@@ -45,11 +52,4 @@ public class Role {
         this.description = description;
     }
 
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
-    }
 }

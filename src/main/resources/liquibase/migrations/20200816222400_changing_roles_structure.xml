@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="20200816222400-changing-roles-structiure" author="vukadzic">
+
+        <dropForeignKeyConstraint baseTableName="user" constraintName="fk_user_role_id_key"/>
+        <dropColumn tableName="user" columnName="role_id"/>
+
+        <createTable tableName="user_has_roles">
+
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="int"/>
+            <column name="role_id" type="int"/>
+
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_has_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_uhr_user_id_key"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="user_has_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_uhr_role_id_key"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

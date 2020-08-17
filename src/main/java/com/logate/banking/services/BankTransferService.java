@@ -4,6 +4,7 @@ import com.logate.banking.domains.BankAccount;
 import com.logate.banking.domains.User;
 import com.logate.banking.dto.BankTransferDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,17 +21,17 @@ public class BankTransferService {
 
     public boolean transfer(BankTransferDTO bankTransferDTO){
 
-        Optional<User> optUser = userService.findById(bankTransferDTO.getUserId());
+        String username=SecurityContextHolder.getContext().getAuthentication().getName();
+        User fromUser = userService.findByUsername(username);
         Optional<BankAccount> optBankAccFrom = bankAccountService.findByAccNumber(
                                                                                 bankTransferDTO.getFromAccountNumber());
         Optional<BankAccount> optBankAccTo= bankAccountService.findByAccNumber(
                                                                                 bankTransferDTO.getToAccountNumber());
 
-        if(optUser.isPresent() && optBankAccFrom.isPresent() && optBankAccTo.isPresent()){
+        if(optBankAccFrom.isPresent() && optBankAccTo.isPresent()){
             BankAccount bankAccountFrom = optBankAccFrom.get();
             BankAccount bankAccountTo = optBankAccTo.get();
 
-            User fromUser = optUser.get();
             List<BankAccount> bankAccountList = fromUser.getBankAccounts();
             List<String> bankAccNumbers = new ArrayList<>();
             for (BankAccount bankAccount:bankAccountList) {
@@ -38,11 +39,10 @@ public class BankTransferService {
             }
 
             if (bankAccNumbers.contains(bankTransferDTO.getFromAccountNumber())
-                                        && bankTransferDTO.getUserPassword().equals(fromUser.getPassword())
-                                        && bankAccountFrom.getCurrentBalance()>=bankTransferDTO.getAmount()
-                                        && bankTransferDTO.getAmount()>=0){
-                bankAccountFrom.setCurrentBalance(bankAccountFrom.getCurrentBalance()- bankTransferDTO.getAmount());
-                bankAccountTo.setCurrentBalance(bankAccountTo.getCurrentBalance() + bankTransferDTO.getAmount());
+                                        && bankAccountFrom.getCurrentBalance()>=bankTransferDTO.getAmouth()
+                                        && bankTransferDTO.getAmouth()>=0){
+                bankAccountFrom.setCurrentBalance(bankAccountFrom.getCurrentBalance()- bankTransferDTO.getAmouth());
+                bankAccountTo.setCurrentBalance(bankAccountTo.getCurrentBalance() + bankTransferDTO.getAmouth());
                 bankAccountService.update(bankAccountFrom);
                 bankAccountService.update(bankAccountTo);
                 return true;

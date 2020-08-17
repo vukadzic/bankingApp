@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.Access;
 
 @RestController
 @RequestMapping(value = "/user",produces = MediaType.APPLICATION_JSON_VALUE)

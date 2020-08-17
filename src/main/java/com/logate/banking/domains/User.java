@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import liquibase.pro.packaged.J;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
@@ -49,10 +48,12 @@ public class User {
     @Column(name = "create_time")
     private Date createdAt = new Date();
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    @JsonIgnoreProperties("userList")
-    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "user_has_roles",
+            joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
+            inverseJoinColumns =@JoinColumn(name = "role_id",referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", targetEntity = BankAccount.class)
     List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
@@ -133,12 +134,8 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     public List<BankAccount> getBankAccounts() {
