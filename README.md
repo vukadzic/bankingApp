@@ -427,19 +427,18 @@ provided in body of request.
 }
 ```
 
-## Success Response
-
-**Code** : `200 OK`
-
 **Input Content examples**
 
 ```json
 {
-    "amount":550.00,
+    "amouth":550.00,
     "fromAccountNumber":"530-00024894-80",
-    "toAccountNumber":"530-00024891-80"
+    "toAccountNumber":"530-00024891-81"
 }
 ```
+## Success Response
+
+**Code** : `200 OK`
 
 ## Fail Response
 
@@ -447,5 +446,5 @@ provided in body of request.
 
 ## Notes
 
-* For money transaction, user has to provide amount of funds that user wants to transfer (amount),number of account from which user wants to transfer funds (fromAccountNumber) and number of account to which funds should be transfered (toAccountNumber). Service checks does account from which funds are being transfered belong to user who is making the transfer. Info of user who is making the transfer is extracted from SecurityContextHolder, or more generaly from jwt token in header of request.
+* For money transaction, user has to provide amouth of funds that user wants to transfer (amouth),number of account from which user wants to transfer funds (fromAccountNumber) and number of account to which funds should be transfered (toAccountNumber). Service checks does account from which funds are being transfered belong to user who is making the transfer. Info of user who is making the transfer is extracted from SecurityContextHolder, or more generaly from jwt token in header of request.
 Service also checks does the user have enough money to make the transaction.
