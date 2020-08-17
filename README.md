@@ -19,7 +19,7 @@ Documentation contains informations about services:
  
 # Authentication
 
-Service for authentication of user. Only unauthorized endpoint of application.
+Service for authentication of user. Only open (unauthorized) endpoint of application.
 
 **URL** : `/login`
 
