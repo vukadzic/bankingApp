@@ -2,17 +2,17 @@ package com.logate.banking.dto;
 
 public class BankTransferDTO {
 
-    private Double amouth;
+    private Double amount;
     private String fromAccountNumber;
     private String toAccountNumber;
 
 
-    public Double getAmouth() {
-        return amouth;
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setAmouth(Double amouth) {
-        this.amouth = amouth;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getFromAccountNumber() {

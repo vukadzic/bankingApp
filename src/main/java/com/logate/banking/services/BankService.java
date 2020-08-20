@@ -11,7 +11,7 @@ import java.util.Optional;
 public class BankService {
 
     @Autowired
-    BankRepository bankRepository;
+    private BankRepository bankRepository;
 
     public Bank create (Bank bank){
         return bankRepository.save(bank);
@@ -41,8 +41,8 @@ public class BankService {
         if (optBank.isPresent()){
             Bank bank = optBank.get();
             bank.setActive(false);
-            Bank savedBank = update(bank);
-            return savedBank;
+            return bankRepository.save(bank);
+
         }
         return null;
     }

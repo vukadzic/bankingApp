@@ -1,11 +1,5 @@
 package com.logate.banking.domains;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import liquibase.pro.packaged.J;
-
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -136,6 +130,14 @@ public class User {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     public List<BankAccount> getBankAccounts() {

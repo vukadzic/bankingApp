@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    BankTransferService bankTransferService;
+    private BankTransferService bankTransferService;
 
     @PutMapping(value = "/transfer")
     public ResponseEntity<Void> transfer (@RequestBody BankTransferDTO bankTransferDTO){

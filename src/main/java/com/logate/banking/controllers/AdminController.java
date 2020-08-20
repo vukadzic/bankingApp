@@ -3,7 +3,6 @@ package com.logate.banking.controllers;
 import com.logate.banking.domains.Bank;
 import com.logate.banking.domains.BankAccount;
 import com.logate.banking.domains.User;
-import com.logate.banking.repositories.BankAccountRepository;
 import com.logate.banking.services.BankAccountService;
 import com.logate.banking.services.BankService;
 import com.logate.banking.services.UserService;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,11 +23,11 @@ import java.util.Optional;
 public class AdminController {
 
     @Autowired
-    BankService bankService;
+    private BankService bankService;
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
-    BankAccountService bankAccountService;
+    private BankAccountService bankAccountService;
 
     @PostMapping(value = "/bank")
     public ResponseEntity<Bank> createBank (@RequestBody Bank bank){
@@ -40,7 +38,7 @@ public class AdminController {
         return new ResponseEntity<>(savedBank,HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/bank")
+    @PutMapping(value = "/bank")
     public ResponseEntity<Bank> updateBank (@RequestBody Bank bank){
         if (bank.getId()==null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -49,7 +47,7 @@ public class AdminController {
         return new ResponseEntity<>(updatedBank,HttpStatus.OK);
     }
 
-    @PutMapping(value = "/bank/deactivate/{id}")
+    @DeleteMapping(value = "/bank/deactivate/{id}")
     public ResponseEntity<Void> deactivateBank (@PathVariable(name = "id") Integer id){
         Bank deactivatedBank = bankService.deactivate(id);
         if(deactivatedBank!=null){
@@ -91,8 +89,7 @@ public class AdminController {
 
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users = new ArrayList<>();
-        users = userService.findAll();
+        List<User> users = userService.findAll();
         if(users.isEmpty())
         {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

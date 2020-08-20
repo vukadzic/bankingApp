@@ -15,9 +15,9 @@ import java.util.Optional;
 public class BankTransferService {
 
     @Autowired
-    BankAccountService bankAccountService;
+    private BankAccountService bankAccountService;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     public boolean transfer(BankTransferDTO bankTransferDTO){
 
@@ -39,10 +39,10 @@ public class BankTransferService {
             }
 
             if (bankAccNumbers.contains(bankTransferDTO.getFromAccountNumber())
-                                        && bankAccountFrom.getCurrentBalance()>=bankTransferDTO.getAmouth()
-                                        && bankTransferDTO.getAmouth()>=0){
-                bankAccountFrom.setCurrentBalance(bankAccountFrom.getCurrentBalance()- bankTransferDTO.getAmouth());
-                bankAccountTo.setCurrentBalance(bankAccountTo.getCurrentBalance() + bankTransferDTO.getAmouth());
+                                        && bankAccountFrom.getCurrentBalance()>=bankTransferDTO.getAmount()
+                                        && bankTransferDTO.getAmount()>=0){
+                bankAccountFrom.setCurrentBalance(bankAccountFrom.getCurrentBalance()- bankTransferDTO.getAmount());
+                bankAccountTo.setCurrentBalance(bankAccountTo.getCurrentBalance() + bankTransferDTO.getAmount());
                 bankAccountService.update(bankAccountFrom);
                 bankAccountService.update(bankAccountTo);
                 return true;
