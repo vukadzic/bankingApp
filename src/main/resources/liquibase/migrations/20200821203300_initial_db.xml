@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="20200821203300-initial-db" author="vukadzic">
+        
+        <createTable tableName="bank">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="TINYINT(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="full_name" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="JMBG" type="varchar(14)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="varchar(45)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(100)"/>
+            <column name="birth_date" type="DATE"/>
+            <column name="email" type="varchar(100)"/>
+            <column name="phone_number" type="varchar(30)"/>
+            <column name="create_time" type="DATETIME" defaultValueComputed="NOW()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="bank_account">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_type" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_number" type="varchar(45)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="current_balance" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bank_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="bank_account"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_BA_user_id_key"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="bank_account"
+                                 baseColumnNames="bank_id"
+                                 constraintName="fk_BA_bank_id_key"
+                                 referencedTableName="bank"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="role">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="user_has_roles">
+            <column name="id" type="int" autoIncrement="true" >
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_has_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_uhr_user_id_key"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="user_has_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_uhr_role_id_key"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>
