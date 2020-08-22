@@ -2,6 +2,8 @@
 
 Documentation contains informations about services:
 
+ - [Authentication](#Authentication)
+ 
  - [Creating bank](#Creating-bank)
 
  - [Updating bank info](#Updating-bank-info)
@@ -14,6 +16,63 @@ Documentation contains informations about services:
  
  - [User transaction](#User-transaction)
  
+ 
+# Authentication
+
+Service for authentication of user. Only open (unauthorized) endpoint of application.
+
+**URL** : `/login`
+
+**Method** : `POST`
+
+**Auth required** : NO
+
+**Permissions required** : None
+
+**Data constraints**
+
+```json
+{
+    "username": "[1 to 45 chars]",
+    "password": "[1 to 100 chars]"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Input Content examples**
+
+Example for user with username "vukadzic" and password "123456".
+
+```json
+{
+    "username": "vukadzic",
+    "password": "123456"
+``` 
+
+**Response Content examples**
+
+Service returns created token.
+
+```json
+{
+  "token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbmphbWljZXRpYyIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNTk3NjcwMTY2fQ.ohx7ig3wZDD1R7iNTKk3CuHpw8Ee7sZgC7nBFcKo5C8QXFsiBMuVyUfwkMluQlyo10YW0hygjKUcKmW8nn03uw"
+}
+```
+
+## Fail Response
+
+**Code** : `401 UNAUTHORIZED`
+
+```json
+Bad credentials
+```
+
+## Notes
+
+* JWT is applied for authorization. Token that user recieves if correct credentials are sent is valid for 1 hour, and among ther things it contains user's role which is important for access to particular services. For every other route, user has to provide token in header of http request, key is "Authorization" and value is "Bearer {recieved token}".
 
 # Creating bank
 
@@ -23,9 +82,9 @@ Service for creating new bank in database
 
 **Method** : `POST`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN
 
 **Data constraints**
 
@@ -84,9 +143,9 @@ Service for updating existing bank info.
 
 **Method** : `PATCH`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN
 
 **Data constraints**
 
@@ -140,9 +199,9 @@ Service for deactivating a bank (setting is_acive field to false)
 
 **Method** : `PUT`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN
 
 **Path variable** : `id:[Integer value]`
 
@@ -166,9 +225,9 @@ Service for creating new user in database
 
 **Method** : `POST`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN
 
 **Data constraints (query params)**
 
@@ -208,6 +267,8 @@ roleName=[1 to 45 char]
 }
 ```
 
+roleName=ROLE_ADMIN
+
 **Response Content examples**
 
 Service returns created object.
@@ -224,11 +285,13 @@ Service returns created object.
     "email": "adzic820@gmail.com",
     "phoneNumber": "067006780",
     "createdAt": "2020-08-14T11:52:10.272+00:00",
-    "role": {
-        "id": 2,
-        "name": "ROLE_ADMIN",
-        "description": "Has access to all services"
-    },
+    "roles": [
+        {
+            "id": 2,
+            "name": "ROLE_ADMIN",
+            "description": "Has access to all services"
+        }
+    ],
     "bankAccounts": []
 }
 ```
@@ -251,9 +314,9 @@ Service for creating new bank account in database. One user can have multiple ba
 
 **Method** : `POST`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN
 
 **Data constraints (query params)**
 
@@ -317,7 +380,14 @@ Service returns created object.
         "birthDate": "1997-07-18T22:00:00.000+00:00",
         "email": "adzic820@gmail.com",
         "phoneNumber": "6800678",
-        "createdAt": "2020-08-13T16:11:55.000+00:00"
+        "createdAt": "2020-08-13T16:11:55.000+00:00",
+        "roles": [
+            {
+                "id": 2,
+                "name": "ROLE_ADMIN",
+                "description": "Has access to all services"
+            }
+        ]
     }
 }
 
@@ -343,37 +413,32 @@ provided in body of request.
 
 **Method** : `PUT`
 
-**Auth required** : NO
+**Auth required** : YES
 
-**Permissions required** : None
+**Roles required** : ADMIN || USER
 
 **Data constraints**
 
 ```json
 {
-    "userId":[Integer value],
-    "userPassword":"[1 to 45 char]",
-    "amount":Double value,
+    "amouth":Double value,
     "fromAccountNumber":"1 to 45 char",
     "toAccountNumber":"1 to 45 char"
 }
 ```
 
-## Success Response
-
-**Code** : `200 OK`
-
 **Input Content examples**
 
 ```json
 {
-    "userId":1,
-    "userPassword":"123456",
-    "amount":550.00,
+    "amouth":550.00,
     "fromAccountNumber":"530-00024894-80",
-    "toAccountNumber":"530-00024891-80"
+    "toAccountNumber":"530-00024891-81"
 }
 ```
+## Success Response
+
+**Code** : `200 OK`
 
 ## Fail Response
 
@@ -381,7 +446,5 @@ provided in body of request.
 
 ## Notes
 
-* For money transaction, user has to provide id of user who is making transaction (userId), password that is added when user
-is created (userPassword), amount of funds that user wants to transfer (amount),number of account from which user wants to transfer funds (fromAccountNumber) and number of account to which funds
-should be transfered (toAccountNumber). Service checks is password correct and does account from which funds are being transfered
-belong to user who is making the transfer.
+* For money transaction, user has to provide amouth of funds that user wants to transfer (amouth),number of account from which user wants to transfer funds (fromAccountNumber) and number of account to which funds should be transfered (toAccountNumber). Service checks does account from which funds are being transfered belong to user who is making the transfer. Info of user who is making the transfer is extracted from SecurityContextHolder, or more generaly from jwt token in header of request.
+Service also checks does the user have enough money to make the transaction.
