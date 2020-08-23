@@ -16,7 +16,20 @@ Documentation contains informations about services:
  
  - [User transaction](#User-transaction)
  
+# Notes for initial starting and testing
+Before running app for the first time, database on mysql server needs to be initialised.
+Application has liquibase db version control so rest of the work on database will be done by 
+application itself. MySQL server needs to be running on port 3306 on local machine and db name needs
+to be 'banking'. Username and password of MySQL local server are set to "root" in application.yaml file.
+Port, path to db, as well as name, username and password can be changed by user in application.yaml file. 
+
+Application has predefined user for testing and creating other users etc. Test user has ROLE_ADMIN and predefined bank 
+account as well. Credentials for logging are:
  
+ **username** : `vukadzic`
+ 
+ **password** : `123456`
+
 # Authentication
 
 Service for authentication of user. Only open (unauthorized) endpoint of application.
@@ -141,7 +154,7 @@ Service for updating existing bank info.
 
 **URL** : `/admin/bank`
 
-**Method** : `PATCH`
+**Method** : `PUT`
 
 **Auth required** : YES
 
@@ -197,7 +210,7 @@ Service for deactivating a bank (setting is_acive field to false)
 
 **URL** : `/admin/bank/deactivate/{id}`
 
-**Method** : `PUT`
+**Method** : `DELETE`
 
 **Auth required** : YES
 
@@ -304,7 +317,7 @@ Service returns created object.
 ## Notes
 
 * Field createdAt is filled automatically by db with current timestamp, and user entity also contains list od bank accounts of user. Data of user which we want to create is
-sent in json format in http body. In queryparam nameRole name of role which should be added to user needs to be sent. In this app, we have 2 roles: "ROLE_USER" and "ROLE_ADMIN".
+sent in json format in http body. In queryparam nameRole names of roles which should be added to user needs to be sent, separated by comma (",") . In this app, we have 2 roles: "ROLE_USER" and "ROLE_ADMIN".
 
 # Creating bank account
 
