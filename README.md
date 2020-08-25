@@ -23,6 +23,8 @@ application itself. MySQL server needs to be running on port 3306 on local machi
 to be 'banking'. Username and password of MySQL local server are set to "root" in application.yaml file.
 Port, path to db, as well as name, username and password can be changed by user in application.yaml file. 
 
+By default, application runs on port 8080, which also can be changed in application.yaml file.
+
 Application has predefined user for testing and creating other users etc. Test user has ROLE_ADMIN and predefined bank 
 account as well. Credentials for logging are:
  
